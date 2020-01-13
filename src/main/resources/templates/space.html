@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/assets/plugins/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>森木云|个人空间</title>
+</head>
+<body>
+<div class="container col-lg-offset-2 col-lg-8">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">森木云</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.get('user').username}"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">个人信息|todo</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/user/logout">登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <ol class="breadcrumb">
+        <li><a href="#" th:text="${session.get('user').username}"></a></li>
+        <li class="active">全部文件</li>
+
+    </ol>
+
+    <form action="/file/upload" method="post" enctype="multipart/form-data" >
+        <div class="form-group">
+            <input type="file" name="file" id="inputFile">
+        </div>
+        <button type="submit" class="btn btn-primary">上传</button>
+    </form>
+    <div class="alert alert-danger" role="alert" th:if="${(statueResult!=null)&&(statueResult.getStatueCode()==500)}">
+        <span th:text="${statueResult.getMessage()}"></span>
+    </div>
+    <div class="alert alert-success" role="alert" th:if="${(statueResult!=null)&&(statueResult.getStatueCode()==200)}">
+        <span th:text="${statueResult.getMessage()}"></span>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>文件名称</th>
+            <th>文件大小</th>
+            <th>更新日期</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="fileInfo:${fileInfos}">
+            <td th:text="${fileInfo.getFileName()}"></td>
+            <td th:text="${fileInfo.getFileSize()}"></td>
+            <td th:text="${fileInfo.getLastModifiedDate()}"></td>
+            <td>
+                <a th:href="'/file/download?fileName='+${fileInfo.getFileName()}">
+                    <button type="button" class="btn btn-primary">下载</button>
+                </a>
+                <a th:href="'/file/delete?fileName='+${fileInfo.getFileName()}">
+                    <button type="button" class="btn btn-danger">删除</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<script src="/assets/plugins/jquery/jquery-3.4.1.js"></script>
+<script src="/assets/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/assets/plugins/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/assets/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>森木云|注册</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-5">
+            <h2>森木云</h2>
+            <small class="col-lg-offset-1"><s>比百度云稍微差亿点点的个人网盘</s></small>
+        </div>
+    </div>
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="alert alert-danger" role="alert" th:if="${statueResult!=null}">
+            <span th:text="${statueResult.getMessage()}"></span>
+        </div>
+        <form action="/user/register" method="post">
+            <div class="form-group">
+                <label for="inputUsername">用户名</label>
+                <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username" th:value="${userInfo==null?'':userInfo.getUsername()}">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">密码</label>
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" th:value="${userInfo==null?'':userInfo.getPassword()}">
+            </div>
+            <div class="form-group">
+                <label for="inputConfirmPassword">密码</label>
+                <input type="password" name="confirmPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" th:value="${userInfo==null?'':userInfo.getConfirmPassword()}">
+            </div>
+            <a href="/login" class="col-lg-offset-9">
+                <button type="button" class="btn btn-primary ">返回</button>
+            </a>
+            <button type="submit" class="btn btn-default">注册</button>
+
+        </form>
+    </div>
+</div>
+
+
+<script src="/assets/plugins/jquery/jquery-3.4.1.js"></script>
+<script src="/assets/plugins/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+</body>
+</html>
