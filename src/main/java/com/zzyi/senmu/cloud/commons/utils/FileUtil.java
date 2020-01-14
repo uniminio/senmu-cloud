@@ -35,7 +35,7 @@ public class FileUtil {
      */
     public StatueResult fileUpload(MultipartFile file,String username) {
         // 先设定一个放置上传文件的文件夹(该文件夹可以不存在，下面会判断创建)
-        String deposeFilesDir = fileRootPath+username+"\\";
+        String deposeFilesDir = fileRootPath+username+File.separator;
         // 判断文件手否有内容
         if (file.isEmpty()) {
             return StatueResult.fail("该文件无任何内容!!!");
@@ -44,7 +44,7 @@ public class FileUtil {
         // 获取附件原名(有的浏览器如ie获取到的是含整个路径的含后缀的文件名，如C:\\Users\\images\\myImage.png)
         String fileName = file.getOriginalFilename();
         // 如果是获取的含有路径的文件名，那么截取掉多余的，只剩下文件名和后缀名
-        int index = fileName.lastIndexOf("\\");
+        int index = fileName.lastIndexOf(File.separator);
         if (index > 0) {
             fileName = fileName.substring(index + 1);
         }
@@ -75,8 +75,11 @@ public class FileUtil {
      */
     public List<FileInfo> folderDisplay(String username) {
         String folderPath = fileRootPath+username;
-        File files[]=new File(folderPath).listFiles();
+        File[] files =new File(folderPath).listFiles();
         List<FileInfo> fileInfos = new ArrayList<FileInfo>();
+        if (files==null) {
+            return fileInfos;
+        }
         for (File file:files) {
             FileInfo fileInfo = new FileInfo();
             fileInfo.setFileName(file.getName());
@@ -154,6 +157,12 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 删除文件
+     * @param filename 文件名
+     * @param username 用户名
+     * @return 处理结果
+     */
     public StatueResult fileDelete(String filename,String username) {
         File file = new File(fileRootPath+File.separator+username+File.separator+filename);
         if (file.exists()) {//文件是否存在

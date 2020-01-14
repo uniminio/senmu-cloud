@@ -10,8 +10,9 @@
     </parent>
     <groupId>com.zzyi</groupId>
     <artifactId>senmu-cloud</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>senmu-cloud</name>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
